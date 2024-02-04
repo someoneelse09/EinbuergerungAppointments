@@ -12,14 +12,12 @@ import com.github.kotlintelegrambot.bot
 import com.github.kotlintelegrambot.dispatch
 import com.github.kotlintelegrambot.dispatcher.text
 import com.github.kotlintelegrambot.entities.ChatId
-import io.github.cdimascio.dotenv.dotenv
 
 
 fun main() {
-    val dotenv = dotenv()
-    val chatId = dotenv["ChatId"].toLong()
+    val chatId = System.getenv("ChatId").toLong()
     val bot = bot {
-        token = dotenv["TELEGRAM_TOKEN"]
+        token = System.getenv("TOKEN")
         dispatch {
             text {
                 bot.sendMessage(ChatId.fromId(message.chat.id), text = text)
@@ -37,6 +35,9 @@ fun main() {
 fun findAppointment(): Appointment {
     val options = ChromeOptions()
     options.addArguments("--headless")
+    options.addArguments("--disable-extensions")
+    options.addArguments("--no-sandbox")
+    println("Starting ChromeDriver")
     val driver = ChromeDriver(options)
 
     driver.get("https://serviceportal.hamburg.de/HamburgGateway/FVP/FV/Bezirke/DigiTermin/Dsgvo")
