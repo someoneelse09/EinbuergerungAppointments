@@ -33,5 +33,5 @@ jobs:
       - name: Build and Publish Docker Images
         run: |
           docker build -t appointment .
-          docker tag appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
-          docker push appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
+          docker tag appointment europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
+          docker push appointment europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
