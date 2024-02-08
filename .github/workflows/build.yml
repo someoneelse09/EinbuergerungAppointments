@@ -22,10 +22,10 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
-          gcloud config set compute/region europe-west10
-          echo "don't do this at home, kids"
           echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > creds.json 
           gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+          gcloud config set compute/region europe-west10
+          echo "don't do this at home, kids"
           gcloud auth configure-docker
 
 
