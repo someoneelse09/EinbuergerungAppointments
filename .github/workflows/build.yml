@@ -34,4 +34,4 @@ jobs:
         run: |
           docker build -t appointment .
           docker tag appointment europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
-          docker push appointment europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
+          docker push europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
