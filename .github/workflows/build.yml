@@ -16,21 +16,21 @@ jobs:
 
       - name: Setup Google Cloud SDK
         run: |
-          - curl https://sdk.cloud.google.com | bash && source "${HOME}/google-cloud-sdk/path.bash.inc" && gcloud components update
+          curl https://sdk.cloud.google.com | bash && source "${HOME}/google-cloud-sdk/path.bash.inc" && gcloud components update
 
       - name: Authenticate via Service Account Key
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
-          - gcloud config set compute/region europe-west10
-          - echo "don't do this at home, kids"
-          - echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > creds.json 
-          - gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
-          - gcloud auth configure-docker
+          gcloud config set compute/region europe-west10
+          echo "don't do this at home, kids"
+          echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > creds.json 
+          gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+          gcloud auth configure-docker
 
 
       - name: Build and Publish Docker Images
         run: |
-          - docker build -t appointment .
-          - docker tag appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment-bot
-          - docker push appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment-bot
+          docker build -t appointment .
+          docker tag appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment-bot
+          docker push appointment-bot europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment-bot
