@@ -23,7 +23,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         run: |
           echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > creds.json 
-          gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+          gcloud auth activate-service-account --key-file creds.json
           gcloud config set compute/region europe-west10
           echo "don't do this at home, kids"
           gcloud auth configure-docker
