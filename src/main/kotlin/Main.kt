@@ -24,13 +24,11 @@ fun main() {
             }
         }
     }
-    while (true) {
-        if (findAppointment().isFound) {
-            bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
-        }
-        TimeUnit.SECONDS.sleep(600)
+    if (findAppointment().isFound) {
+        bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
     }
 }
+
 
 fun findAppointment(): Appointment {
     val options = ChromeOptions()
