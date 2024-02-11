@@ -1,5 +1,9 @@
 name: Build and Push Docker Image
 
+permissions:
+  contents: read
+  id-token: write
+
 on:
   push:
     branches:
@@ -14,24 +18,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Google Cloud SDK
-        run: |
-          curl https://sdk.cloud.google.com | bash && source "${HOME}/google-cloud-sdk/path.bash.inc" && gcloud components update
-
-      - name: Authenticate via Service Account Key
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        run: |
-          echo $GOOGLE_APPLICATION_CREDENTIALS | base64 --decode > creds.json 
-          gcloud auth activate-service-account --key-file creds.json
-          gcloud config set project appointmentbot-413314
-          gcloud config set compute/region europe-west10
-          echo "don't do this at home, kids"
-          gcloud auth configure-docker
-
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::246770851643:role/einbuergerungs-appointments-github-actions
+          aws-region: eu-central-1
 
       - name: Build and Publish Docker Images
         run: |
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin "246770851643.dkr.ecr.eu-central-1.amazonaws.com"
           docker build -t appointment .
-          docker tag appointment europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
-          docker push europe-west10-docker.pkg.dev/appointmentbot-413314/appointment-bot/appointment
+          docker tag appointment "246770851643.dkr.ecr.eu-central-1.amazonaws.com/appointment-bot:latest"
+          docker push "246770851643.dkr.ecr.eu-central-1.amazonaws.com/appointment-bot:latest"
