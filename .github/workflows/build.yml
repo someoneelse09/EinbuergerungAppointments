@@ -45,33 +45,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: 246770851643.dkr.ecr.eu-central-1.amazonaws.com/einburgerung
-          flavor: |
-            latest=true
-          # generate Docker tags based on the following events/attributes
-          tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-
-      - name: Build and push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          platforms: linux/arm32v7
-          tags: latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+      - name: Build and Publish Docker Images
+        run: |
+          aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin "246770851643.dkr.ecr.eu-central-1.amazonaws.com"
+          docker build -t einbuergerung --platform linux/arm32v7 .
+          docker tag einbuergerung "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:latest"
+          docker push "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:latest"
+      
