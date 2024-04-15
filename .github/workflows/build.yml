@@ -18,10 +18,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Load cached jar
+        id: jar-cache
+        uses: actions/cache@v4
+        with:
+          path: ./build/libs
+          key: jar-${{ runner.os }}-${{ hashFiles('build.gradle.kts') }}
+
       - name: Setup Gradle
+        if: steps.jar-cache.outputs.cache-hit != 'true'
         uses: gradle/gradle-build-action@v3
 
       - name: Build with Gradle
+        if: steps.jar-cache.outputs.cache-hit != 'true'
         run: ./gradlew build
 
       - name: Configure AWS Credentials
@@ -40,10 +49,28 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: 246770851643.dkr.ecr.eu-central-1.amazonaws.com/einburgerung
+          flavor: |
+            latest=true
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
+          push: true
           platforms: linux/arm32v7
           tags: latest
           cache-from: type=gha
