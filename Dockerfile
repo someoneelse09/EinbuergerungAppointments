@@ -1,6 +1,6 @@
 FROM arm32v7/eclipse-temurin:17-focal
 
-RUN apt update && apt install chromium-chromedriver
+RUN apt update && apt install -y chromium-chromedriver
 
 RUN mkdir /app
 ENV TOKEN=XXX
