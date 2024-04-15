@@ -1,4 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.bundling.Zip
+import java.io.File
 
 plugins {
     kotlin("jvm") version "1.9.21"
@@ -19,6 +22,8 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.16.1")
     implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.1.0")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
+    implementation("com.amazonaws:aws-lambda-java-log4j2:1.6.0")
 
 
     testImplementation("org.jetbrains.kotlin:kotlin-test")
@@ -37,12 +42,26 @@ tasks {
     }
 }
 
+
 tasks {
     build {
         dependsOn(shadowJar)
     }
 }
 
+val libs by extra { File("../bin/lib.zip") }
+val resources = "$projectDir/src/main/resources/"
+
+tasks.register<Copy>("unzipLibs") {
+    from(zipTree(libs))
+    into(resources)
+}
+
+tasks.register<Zip>("zipLibs") {
+    from(resources)
+    archiveFileName.set("lib.zip")
+    destinationDirectory.set(File("../bin"))
+}
 
 tasks.test {
     useJUnitPlatform()

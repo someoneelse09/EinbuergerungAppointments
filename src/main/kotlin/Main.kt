@@ -24,8 +24,17 @@ fun main() {
             }
         }
     }
-    if (findAppointment().isFound) {
-        bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
+//    if (findAppointment().isFound) {
+//        bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
+//    }
+    while (true) {
+        if (findAppointment().isFound) {
+            bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
+        }
+        TimeUnit.SECONDS.sleep(900)
+        if (findAppointment().isFound) {
+            bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
+        }
     }
 }
 
@@ -84,7 +93,7 @@ fun findAppointment(): Appointment {
     when (noAppointments.isDisplayed) {
         true -> println("No appointments available")
         false -> {
-            val availableDate = driver.findElement(By.xpath("//div[@class='card-body']/p/strong/following-sibling::br"))
+            val availableDate = driver.findElement(By.xpath("//*[@id=\"amSchnellsten\"]/div/div/p"))
             val availableDateText = availableDate.text.trim()
             println("Appointments available on: $availableDateText")
             return Appointment(availableDateText, true)

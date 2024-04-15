@@ -5,9 +5,9 @@ COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN ./gradlew build --no-daemon
 
-FROM amazoncorretto:17-alpine
+FROM arm32v7/eclipse-temurin:17-focal
 
-RUN apk update && apk add chromium-chromedriver
+RUN apt update && apt add chromium-chromedriver
 
 RUN mkdir /app
 ENV TOKEN=XXX
