@@ -1,4 +1,4 @@
-FROM arm32v7/gradle:jdk17-focal AS build
+FROM gradle:jdk17 AS build
 LABEL authors="lizaoreshkina"
 
 COPY --chown=gradle:gradle . /home/gradle/src
