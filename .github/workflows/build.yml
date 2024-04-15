@@ -21,7 +21,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::246770851643:role/einbuergerungs-appointments-github-actions
+          role-to-assume: arn:aws:iam::246770851643:role/einbuergerung-appointments-github-actions
           aws-region: eu-central-1
 
       - name: Set up QEMU
