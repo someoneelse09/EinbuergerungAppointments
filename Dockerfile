@@ -1,4 +1,4 @@
-FROM gradle:8.5-jdk17 AS build
+FROM arm32v7/gradle:8.5-jdk17 AS build
 LABEL authors="lizaoreshkina"
 
 COPY --chown=gradle:gradle . /home/gradle/src
