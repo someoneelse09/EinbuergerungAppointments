@@ -4,7 +4,6 @@ import Appointment
 import User
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.support.ui.Select
 import java.util.concurrent.TimeUnit
@@ -12,6 +11,7 @@ import com.github.kotlintelegrambot.bot
 import com.github.kotlintelegrambot.dispatch
 import com.github.kotlintelegrambot.dispatcher.text
 import com.github.kotlintelegrambot.entities.ChatId
+import org.openqa.selenium.chrome.ChromeDriver
 
 
 fun main() {
@@ -24,9 +24,7 @@ fun main() {
             }
         }
     }
-//    if (findAppointment().isFound) {
-//        bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")
-//    }
+
     while (true) {
         if (findAppointment().isFound) {
             bot.sendMessage(ChatId.fromId(chatId), text = "New Appointment is available: ${findAppointment().date}")

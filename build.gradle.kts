@@ -19,14 +19,9 @@ repositories {
 }
 
 dependencies {
-    implementation("org.seleniumhq.selenium:selenium-java:4.16.1")
+    implementation("org.seleniumhq.selenium:selenium-java:4.19.1")
     implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.1.0")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
-    implementation("com.amazonaws:aws-lambda-java-core:1.2.3")
-    implementation("com.amazonaws:aws-lambda-java-log4j2:1.6.0")
-
-
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
 
     // Logback Classic (SLF4J implementation)
     implementation("ch.qos.logback:logback-classic:1.2.3")

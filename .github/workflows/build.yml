@@ -48,7 +48,7 @@ jobs:
       - name: Build and Publish Docker Images
         run: |
           aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin "246770851643.dkr.ecr.eu-central-1.amazonaws.com"
-          docker build -t einbuergerung --platform linux/arm32v7 .
-          docker tag einbuergerung "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:latest"
-          docker push "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:latest"
+          docker build -t einbuergerung:amd64 --platform linux/amd64 .
+          docker tag einbuergerung:amd64 "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:amd64"
+          docker push "246770851643.dkr.ecr.eu-central-1.amazonaws.com/einbuergerung:amd64"
       
