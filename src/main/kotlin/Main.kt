@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 
 fun main() {
+    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver")
     val chatId = System.getenv("ChatId").toLong()
     val bot = bot {
         token = System.getenv("TOKEN")
