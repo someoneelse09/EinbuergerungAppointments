@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ./build/libs
-          key: jar-${{ runner.os }}-${{ hashFiles('build.gradle.kts') }}
+          key: jar-${{ runner.os }}-${{ hashFiles('build.gradle.kts') }}-${{ hashFiles('src/main/kotlin/Main.kt') }}
 
       - name: Setup Gradle
         if: steps.jar-cache.outputs.cache-hit != 'true'
