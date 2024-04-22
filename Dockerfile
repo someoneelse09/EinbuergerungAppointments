@@ -23,4 +23,6 @@ ENV TOKEN=XXX
 ENV ChatId=XXX
 COPY ./build/libs/ /app/
 
+USER root
+
 ENTRYPOINT ["java","-jar","/app/shadow-1.0-SNAPSHOT-all.jar"]
