@@ -15,7 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 
 
 fun main() {
-    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver")
+    // System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver")
     val chatId = System.getenv("ChatId").toLong()
     val bot = bot {
         token = System.getenv("TOKEN")
@@ -43,6 +43,7 @@ fun findAppointment(): Appointment {
     options.addArguments("--headless")
     options.addArguments("--disable-extensions")
     options.addArguments("--no-sandbox")
+    options.addArguments("--disable-dev-shm-usage")
     println("Starting ChromeDriver")
     val driver = ChromeDriver(options)
 
